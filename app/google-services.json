@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "319839103732",
+    "firebase_url": "https://nobese-42a3a.firebaseio.com",
+    "project_id": "nobese-42a3a",
+    "storage_bucket": "nobese-42a3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319839103732:android:76c59d57a924aade",
+        "android_client_info": {
+          "package_name": "com.example.project.nobese"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319839103732-0cpsf208midd6cobucq33ehgmko19jms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project.nobese",
+            "certificate_hash": "ecebe6beb4cb7b2e6c4207bb23353758d9f7cdd4"
+          }
+        },
+        {
+          "client_id": "319839103732-56rrbfhfu9qjl43kab8h4mdtk09si42p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYRSh0nYXnXL373uDe1YsuwrSl7tFYYtw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319839103732-56rrbfhfu9qjl43kab8h4mdtk09si42p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
