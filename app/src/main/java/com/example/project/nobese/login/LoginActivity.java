@@ -59,9 +59,12 @@ public class LoginActivity extends AppCompatActivity {
 
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
-                                        dialog.dismiss();
+                                        if(task.isSuccessful()){
+                                            dialog.dismiss();
+                                        }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
