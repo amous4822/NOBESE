@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NOBESE</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="login_button">LOGIN</string>
+    <string name="email">Email</string>
+    <string name="resend_verification">Resend Verification Email</string>
+    <string name="cancel_dialog">Cancel</string>
+    <string name="resend_confirm">Confirm</string>
+    <string name="register">Register an account</string>
 </resources>

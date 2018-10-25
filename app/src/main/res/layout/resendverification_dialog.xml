@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resend_verification"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif"
+        />
+
+    <EditText
+        android:layout_width="289dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:id="@+id/dialog_email"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="289dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_password"
+        android:inputType="textWebPassword"
+        android:hint="@string/password"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/dialog_cancel"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_dialog"
+            android:fontFamily="sans-serif"
+            android:textSize="21sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:id="@+id/dialog_confirm"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="235dp"
+            android:layout_marginTop="0dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/resend_confirm" />
+
+    </RelativeLayout>
+
+</LinearLayout>
