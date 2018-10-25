@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/resend_verification"
         android:textSize="25sp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:textColor="@color/black"
         android:fontFamily="sans-serif"
@@ -20,6 +21,8 @@
         android:layout_width="289dp"
         android:layout_height="wrap_content"
         android:hint="@string/email"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:id="@+id/dialog_email"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"/>
@@ -33,30 +36,32 @@
         android:hint="@string/password"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="289dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
 
 
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/dialog_cancel"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel_dialog"
-            android:fontFamily="sans-serif"
-            android:textSize="21sp"
-            />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="21sp"
-            android:id="@+id/dialog_confirm"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="235dp"
-            android:layout_marginTop="0dp"
             android:fontFamily="sans-serif"
-            android:text="@string/resend_confirm" />
+            android:text="@string/cancel_dialog"
+            android:textSize="21sp" />
+
+        <TextView
+            android:id="@+id/dialog_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="sans-serif"
+            android:text="@string/resend_confirm"
+            android:textSize="21sp" />
 
     </RelativeLayout>
 
