@@ -50,6 +50,7 @@
     <color name="Easy">#FFEE58</color>
     <color name="Medium">#FBC02D</color>
     <color name="Hard">#F57F17</color>
+    <color name="bottom_icon_unselected">@android:color/black</color>
 
 
     <!-- Screens background color-->

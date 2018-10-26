@@ -16,12 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.nobese.R;
+<<<<<<< HEAD
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+||||||| merged common ancestors
+=======
+import com.example.project.nobese.base.MainActivity;
+>>>>>>> a4bea92e7f6904a5e40b28dbc1686a4200d4775d
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -58,8 +63,21 @@ public class LoginActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.password_login);
         mLogin = findViewById(R.id.login_button);
 
+<<<<<<< HEAD
         mGoogleSignin = findViewById(R.id.google_sign_in_button);
 
+||||||| merged common ancestors
+=======
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+>>>>>>> a4bea92e7f6904a5e40b28dbc1686a4200d4775d
         setupFirebaseAuth();
         setupGoogle();
 
