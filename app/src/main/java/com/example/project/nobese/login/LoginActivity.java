@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.nobese.R;
+import com.example.project.nobese.base.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -43,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.email_login);
         mPassword = findViewById(R.id.password_login);
         mLogin = findViewById(R.id.login_button);
+
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         setupFirebaseAuth();
 
