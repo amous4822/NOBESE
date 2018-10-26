@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,12 +16,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.nobese.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,9 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
     private Button mLogin;
+    private SignInButton mGoogleSignin;
+    private GoogleSignInClient mGoogleSignInClient;
+
+    private static final int RC_SIGN_IN = 9001;
+    private FirebaseAuth mAuth;
 
 
-    Context mContext ;
+    Context mContext;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -44,7 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.password_login);
         mLogin = findViewById(R.id.login_button);
 
+        mGoogleSignin = findViewById(R.id.google_sign_in_button);
+
         setupFirebaseAuth();
+        setupGoogle();
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if(task.isSuccessful()){
+                                        if (task.isSuccessful()) {
                                             dialog.dismiss();
                                         }
                                     }
@@ -85,13 +102,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        mGoogleSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+
         TextView mResendVerification = (TextView) findViewById(R.id.resend_verify);
         mResendVerification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 ResendVerificationDialog dialog = new ResendVerificationDialog();
-                dialog.show(getSupportFragmentManager() , "resend_verification_dialog");
+                dialog.show(getSupportFragmentManager(), "resend_verification_dialog");
             }
         });
 
@@ -100,12 +127,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(LoginActivity.this , RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
     }
-
 
 
     private boolean isValid(String text) {
@@ -130,12 +156,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    if (user.isEmailVerified()){
+                    if (user.isEmailVerified()) {
                         Toast.makeText(LoginActivity.this, "User logged in : " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                        FirebaseAuth.getInstance().signOut();
-                    } else{
+                        signOut();
+                    } else {
                         Toast.makeText(LoginActivity.this, "Please verify your account: " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                        FirebaseAuth.getInstance().signOut();
+                        signOut();
+
                     }
 
                 } else {
@@ -157,5 +184,70 @@ public class LoginActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
         }
+    }
+
+    public void setupGoogle() {
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(mContext, "signInWithCredential:success", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(mContext, "signInWithCredential:failure" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Toast.makeText(mContext, "Google sign in failed", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }
+    }
+
+    private void signOut(){
+        FirebaseAuth.getInstance().signOut();
+
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(mContext, "User Signed Out from Google", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
